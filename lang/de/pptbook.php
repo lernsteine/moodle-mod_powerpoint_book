@@ -1,0 +1,20 @@
+<?php
+$string['modulename'] = 'PPT-Buch';
+$string['modulenameplural'] = 'PPT-Bücher';
+$string['pluginname'] = 'PPT-Buch';
+$string['modulename_help'] = 'Zeigt aus PowerPoint exportierte PNG-Folien in einem 2×2-Raster mit Seitenumbruch und Bildunterschriften. Klick vergrößert. Enthält eine dezente Blätteranimation.';
+$string['pptbook:addinstance'] = 'Neues PPT-Buch hinzufügen';
+$string['pptbook:view'] = 'PPT-Buch ansehen';
+$string['pptbook:manage'] = 'PPT-Buch verwalten';
+$string['name'] = 'Name';
+$string['intro'] = 'Beschreibung';
+$string['slides'] = 'PNG-Folien';
+$string['slides_help'] = 'Laden Sie eine oder mehrere .png-Dateien hoch (Export aus PowerPoint). Es werden 4 pro Seite angezeigt.';
+$string['noimages'] = 'Es wurden noch keine PNG-Bilder hochgeladen.';
+$string['page'] = 'Seite {$a}';
+$string['previous'] = 'Zurück';
+$string['next'] = 'Weiter';
+$string['editcaptions'] = 'Erläuterungen bearbeiten';
+$string['savechanges'] = 'Änderungen speichern';
+$string['captionssaved'] = 'Erläuterungen gespeichert';
+$string['privacy:metadata'] = 'Das PPT-Buch speichert keine personenbezogenen Daten über die üblichen Moodle-IDs in Logs hinaus.';

@@ -1,0 +1,38 @@
+<div class="pptbook-wrap">
+  {{#manage}}
+    <div style="display:flex;justify-content:flex-end;margin:0 0 10px 0;">
+      <a class="btn btn-secondary" href="{{manageurl}}">{{#str}} editcaptions, mod_pptbook {{/str}}</a>
+    </div>
+  {{/manage}}
+
+  <div class="pptbook-book">
+    <div class="pptbook-spine" aria-hidden="true"></div>
+    <div class="pptbook-pagewrap">
+      <div class="pptbook-page edge-right" id="pptbook-page">
+        <div class="pptbook-grid" id="pptbook-grid">
+          {{#items}}
+            <figure>
+              <a href="{{fullurl}}" class="pptbook-zoom" data-full="{{fullurl}}">
+                <img class="slide" src="{{imgurl}}" alt="{{filename}}">
+              </a>
+              {{#caption}}
+                <figcaption>{{{caption}}}</figcaption>
+              {{/caption}}
+            </figure>
+          {{/items}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pptbook-pagination" style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;">
+    {{#hasprev}}<a class="btn btn-secondary" href="{{preurl}}">{{#str}} previous, mod_pptbook {{/str}}</a>{{/hasprev}}
+    <div>{{#str}} page, mod_pptbook {{/str}} {{page}} / {{pages}}</div>
+    {{#hasnext}}<a class="btn btn-secondary" href="{{nexturl}}">{{#str}} next, mod_pptbook {{/str}}</a>{{/hasnext}}
+  </div>
+
+  <!-- Lightbox modal -->
+  <div id="pptbook-modal">
+    <img id="pptbook-modal-img" src="" alt="">
+  </div>
+</div>

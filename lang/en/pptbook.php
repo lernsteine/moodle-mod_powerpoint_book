@@ -1,0 +1,20 @@
+<?php
+$string['modulename'] = 'PPT Book';
+$string['modulenameplural'] = 'PPT Books';
+$string['pluginname'] = 'PPT Book';
+$string['modulename_help'] = 'Shows PNG slides (exported from PowerPoint) in a 2x2 paginated grid with captions. Click a slide to view it enlarged. Includes a subtle page-turn animation.';
+$string['pptbook:addinstance'] = 'Add a new PPT Book';
+$string['pptbook:view'] = 'View PPT Book';
+$string['pptbook:manage'] = 'Manage PPT Book';
+$string['name'] = 'Name';
+$string['intro'] = 'Description';
+$string['slides'] = 'PNG slides';
+$string['slides_help'] = 'Upload one or more .png files exported from PowerPoint. They will be shown 4 per page.';
+$string['noimages'] = 'No PNG images have been uploaded yet.';
+$string['page'] = 'Page {$a}';
+$string['previous'] = 'Previous';
+$string['next'] = 'Next';
+$string['editcaptions'] = 'Edit captions';
+$string['savechanges'] = 'Save changes';
+$string['captionssaved'] = 'Captions saved';
+$string['privacy:metadata'] = 'The PPT Book plugin does not store personal data beyond typical Moodle user IDs in logs.';
