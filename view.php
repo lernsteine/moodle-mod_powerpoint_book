@@ -1,6 +1,21 @@
 <?php
+// This file is part of Moodle - https://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+
 require('../../config.php');
-require_once(__DIR__.'/locallib.php');
+require_once(__DIR__ . '/locallib.php');
 
 $id = required_param('id', PARAM_INT);
 $page = optional_param('page', 1, PARAM_INT);
@@ -28,7 +43,7 @@ if (isset($PAGE->activityheader) && method_exists($PAGE->activityheader, 'set_at
         'subtitle' => '',
         'description' => '',
         'hasintro' => false,
-        'hidecompletion' => true
+        'hidecompletion' => true,
     ]);
 }
 
@@ -45,7 +60,9 @@ if ($total === 0) {
 }
 
 // Sort by natural filename order.
-usort($slides, function($a, $b) { return strnatcasecmp($a->get_filename(), $b->get_filename()); });
+usort($slides, function ($a, $b) {
+    return strnatcasecmp($a->get_filename(), $b->get_filename());
+});
 
 $pages = max(1, (int)ceil($total / $perpage));
 $page = max(1, min($page, $pages));
@@ -57,19 +74,26 @@ $captions = pptbook_get_captions($pptbook);
 $items = [];
 foreach ($current as $f) {
     $filename = $f->get_filename();
-    $url = moodle_url::make_pluginfile_url($f->get_contextid(), $f->get_component(), $f->get_filearea(),
-        $f->get_itemid(), $f->get_filepath(), $filename, false);
+    $url = moodle_url::make_pluginfile_url(
+        $f->get_contextid(),
+        $f->get_component(),
+        $f->get_filearea(),
+        $f->get_itemid(),
+        $f->get_filepath(),
+        $filename,
+        false
+    );
     $items[] = (object)[
         'filename' => $filename,
         'imgurl' => (string)$url,
         'fullurl' => (string)$url,
-        'caption' => $captions[$filename] ?? ''
+        'caption' => $captions[$filename] ?? '',
     ];
 }
 
 $manageurl = null;
 if (has_capability('mod/pptbook:manage', $context)) {
-    $manageurl = new moodle_url('/mod/pptbook/edit_captions.php', ['cmid'=>$cm->id, 'id'=>$cm->id, 'page'=>$page]);
+    $manageurl = new moodle_url('/mod/pptbook/edit_captions.php', ['cmid' => $cm->id, 'id' => $cm->id, 'page' => $page]);
 }
 
 $templatecontext = (object)[
@@ -81,7 +105,7 @@ $templatecontext = (object)[
     'preurl'  => (new moodle_url('/mod/pptbook/view.php', ['id' => $cm->id, 'page' => $page - 1]))->out(false),
     'nexturl' => (new moodle_url('/mod/pptbook/view.php', ['id' => $cm->id, 'page' => $page + 1]))->out(false),
     'manageurl' => $manageurl ? $manageurl : null,
-    'manage' => !empty($manageurl)
+    'manage' => !empty($manageurl),
 ];
 
 echo $OUTPUT->render_from_template('mod_pptbook/page', $templatecontext);

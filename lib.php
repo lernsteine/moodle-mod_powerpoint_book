@@ -1,12 +1,31 @@
 <?php
+// This file is part of Moodle - https://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+
 defined('MOODLE_INTERNAL') || die();
 
 function pptbook_supports($feature) {
     switch ($feature) {
-        case FEATURE_MOD_INTRO: return true;
-        case FEATURE_SHOW_DESCRIPTION: return false;  //no course intro
-        case FEATURE_BACKUP_MOODLE2: return true;
-        default: return null;
+        case FEATURE_MOD_INTRO:
+            return true;
+        case FEATURE_SHOW_DESCRIPTION:
+            return false;  // no course intro
+        case FEATURE_BACKUP_MOODLE2:
+            return true;
+        default:
+            return null;
     }
 }
 
@@ -66,7 +85,9 @@ function pptbook_save_slides_files($instanceid, $data, $cmid = null) {
     if (empty($cmid)) {
         try {
             $cm = get_coursemodule_from_instance('pptbook', $instanceid, 0, false, IGNORE_MISSING);
-            if ($cm) { $cmid = $cm->id; }
+            if ($cm) {
+                $cmid = $cm->id;
+            }
         } catch (\Exception $e) {
             $cmid = null;
         }
@@ -101,7 +122,7 @@ function pptbook_get_coursemodule_info($cm) {
 /**
  * File serving callback.
  */
-function pptbook_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
+function pptbook_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
     require_login($course, true, $cm);
     if ($context->contextlevel != CONTEXT_MODULE) {
         return false;
