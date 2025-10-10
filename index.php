@@ -24,7 +24,7 @@
 
 /**
  * Class mod_pptbook.
- */.
+ */
 
 require('../../config.php');
 $courseid = required_param('id', PARAM_INT);
