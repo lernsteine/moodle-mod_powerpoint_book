@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - https://moodle.org/
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,7 +12,19 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * [Short description of the file]
+ *
+ * @package    mod_pptbook
+ * @copyright  2025 Ralf Hagemeister <ralf.hagemeister@lernsteine.de>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+/**
+ * Class mod_pptbook.
+ */
 
 require('../../config.php');
 require_once(__DIR__ . '/locallib.php');
@@ -20,7 +32,7 @@ require_once(__DIR__ . '/edit_captions_form.php');
 
 $cmid = optional_param('cmid', 0, PARAM_INT);
 $id   = optional_param('id', 0, PARAM_INT);
-// Fallback: Wenn nur id gesetzt ist, verwende sie als cmid (wir erwarten hier CM-ID, nicht Instanz-ID!)
+// Fallback
 if (!$cmid && $id) {
     $cmid = $id;
 }
@@ -52,7 +64,7 @@ foreach ($slides as $f) {
     $filesmap[$fn] = $existing[$fn] ?? '';
 }
 
-// Action-URL enthält cmid & id (identisch, beides CM-ID), um Router/Proxys robust zu bedienen.
+// Action-URL includes cmid & id.
 $action = new moodle_url('/mod/pptbook/edit_captions.php', ['cmid' => $cm->id, 'id' => $cm->id]);
 $mform  = new mod_pptbook_edit_captions_form($action, ['files' => $filesmap, 'cmid' => $cm->id]);
 
@@ -61,7 +73,7 @@ if ($mform->is_cancelled()) {
 } else if ($data = $mform->get_data()) {
     require_sesskey();
 
-    // CM & Instanz aus POST neu herleiten (cmid hat Vorrang, id ist Spiegel)
+    // CM & Instanz.
     $postcmid = optional_param('cmid', 0, PARAM_INT);
     $postid   = optional_param('id', 0, PARAM_INT);
     if (!$postcmid && $postid) {
@@ -74,7 +86,7 @@ if ($mform->is_cancelled()) {
     $captions = $data->caption ?? [];
     $json = json_encode($captions, JSON_UNESCAPED_UNICODE);
 
-    // Feldbasiertes Update vermeidet Probleme mit vollständigen Record-Objekten
+    // Field based Update to prvide problems.
     $DB->set_field('pptbook', 'captionsjson', $json, ['id' => $postpptbook->id]);
     $DB->set_field('pptbook', 'timemodified', time(), ['id' => $postpptbook->id]);
 

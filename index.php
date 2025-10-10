@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - https://moodle.org/
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,7 +12,19 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * [Short description of the file]
+ *
+ * @package    mod_pptbook
+ * @copyright  2025 Ralf Hagemeister <ralf.hagemeister@lernsteine.de>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+/**
+ * Class mod_pptbook.
+ */.
 
 require('../../config.php');
 $courseid = required_param('id', PARAM_INT);
@@ -27,14 +39,16 @@ echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('modulenameplural', 'mod_pptbook'));
 
 if (!$pptbooks = get_all_instances_in_course('pptbook', $course)) {
-    notice(get_string('nonewmodules', '', get_string('modulename', 'pptbook')), new moodle_url('/course/view.php', ['id' => $courseid]));
+    notice(get_string('nonewmodules', '', get_string('modulename', 'pptbook')), 
+	new moodle_url('/course/view.php', ['id' => $courseid]));
     exit;
 }
 
 $table = new html_table();
 $table->head = [get_string('name'), get_string('intro')];
 foreach ($pptbooks as $m) {
-    $link = html_writer::link(new moodle_url('/mod/pptbook/view.php', ['id' => $m->coursemodule]), format_string($m->name));
+    $link = html_writer::link(new moodle_url('/mod/pptbook/view.php', 
+	['id' => $m->coursemodule]), format_string($m->name));
     $table->data[] = [$link, format_string($m->intro)];
 }
 echo html_writer::table($table);

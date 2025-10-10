@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - https://moodle.org/
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,8 +12,19 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * [Short description of the file]
+ *
+ * @package    mod_pptbook
+ * @copyright  2025 Ralf Hagemeister <ralf.hagemeister@lernsteine.de>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+/**
+ * Class mod_pptbook.
+ */
 require('../../config.php');
 require_once(__DIR__ . '/locallib.php');
 
@@ -36,7 +47,7 @@ $PAGE->set_context($context);
 $PAGE->requires->css(new moodle_url('/mod/pptbook/styles.css'));
 $PAGE->requires->js_call_amd('mod_pptbook/lightbox', 'init');
 
-// Activity-Header-Inhalte (Titel/Intro) vorsorglich deaktivieren.
+// Activity-Header-Content.
 if (isset($PAGE->activityheader) && method_exists($PAGE->activityheader, 'set_attrs')) {
     $PAGE->activityheader->set_attrs([
         'title' => '',
@@ -48,8 +59,8 @@ if (isset($PAGE->activityheader) && method_exists($PAGE->activityheader, 'set_at
 }
 
 echo $OUTPUT->header();
-// KEIN echo $OUTPUT->heading(...);
-// KEINE Intro-Box hier
+// No echo $OUTPUT->heading(...).
+// No Intro-Box here.
 
 $slides = pptbook_get_slide_files($context);
 $total = count($slides);
