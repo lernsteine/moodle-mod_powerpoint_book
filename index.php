@@ -39,16 +39,20 @@ echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('modulenameplural', 'mod_pptbook'));
 
 if (!$pptbooks = get_all_instances_in_course('pptbook', $course)) {
-    notice(get_string('nonewmodules', '', get_string('modulename', 'pptbook')), 
-	new moodle_url('/course/view.php', ['id' => $courseid]));
+    notice(
+        get_string('nonewmodules', '', get_string('modulename', 'pptbook')),
+        new moodle_url('/course/view.php', ['id' => $courseid])
+    );
     exit;
 }
 
 $table = new html_table();
 $table->head = [get_string('name'), get_string('intro')];
 foreach ($pptbooks as $m) {
-    $link = html_writer::link(new moodle_url('/mod/pptbook/view.php', 
-	['id' => $m->coursemodule]), format_string($m->name));
+    $link = html_writer::link(new moodle_url(
+        '/mod/pptbook/view.php',
+        ['id' => $m->coursemodule]
+    ), format_string($m->name));
     $table->data[] = [$link, format_string($m->intro)];
 }
 echo html_writer::table($table);
