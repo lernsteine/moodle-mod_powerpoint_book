@@ -15,32 +15,48 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * [Short description of the file]
+ * Library functions for the PPT Book activity.
  *
  * @package    mod_pptbook
- * @copyright  2025 Ralf Hagemeister <ralf.hagemeister@lernsteine.de>
+ * @copyright  2025 Ralf Hagemeister
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 /**
- * Class mod_pptbook.
+ * Declares which features the module supports.
+ *
+ * @param string $feature FEATURE_* constant.
+ * @return mixed True/false or other value depending on the feature, or null if unknown.
+ * @package   mod_pptbook
  */
-
 function pptbook_supports($feature) {
     switch ($feature) {
         case FEATURE_MOD_INTRO:
             return true;
+
+        // Show the activity description on the course page if enabled.
         case FEATURE_SHOW_DESCRIPTION:
-            return false;  // no course intro
+            return false;
+
         case FEATURE_BACKUP_MOODLE2:
             return true;
+
         default:
             return null;
     }
 }
 
+/**
+ * Creates a new PPT Book instance.
+ *
+ * @param stdClass $data  Form data from mod_form.
+ * @param MoodleQuickForm $mform The form (unused but required by signature).
+ * @return int New instance ID.
+ * @package   mod_pptbook
+ */
 function pptbook_add_instance($data, $mform) {
     global $DB;
+
     $data->timecreated = time();
     $data->timemodified = time();
 
@@ -51,12 +67,24 @@ function pptbook_add_instance($data, $mform) {
     }
 
     $id = $DB->insert_record('pptbook', $data);
+
+    // Save any uploaded slide files.
     pptbook_save_slides_files($id, $data, $data->coursemodule ?? null);
+
     return $id;
 }
 
+/**
+ * Updates an existing PPT Book instance.
+ *
+ * @param stdClass $data  Form data from mod_form.
+ * @param MoodleQuickForm $mform The form (unused but required by signature).
+ * @return bool True on success.
+ * @package   mod_pptbook
+ */
 function pptbook_update_instance($data, $mform) {
     global $DB;
+
     $data->id = $data->instance;
     $data->timemodified = time();
 
@@ -65,48 +93,83 @@ function pptbook_update_instance($data, $mform) {
     }
 
     $DB->update_record('pptbook', $data);
+
+    // Save any uploaded slide files.
     pptbook_save_slides_files($data->id, $data, $data->coursemodule ?? null);
+
     return true;
 }
 
+/**
+ * Deletes a PPT Book instance and its related data.
+ *
+ * @param int $id Instance ID.
+ * @return bool True on success, false if the instance does not exist.
+ * @package   mod_pptbook
+ */
 function pptbook_delete_instance($id) {
     global $DB;
+
     if (!$pptbook = $DB->get_record('pptbook', ['id' => $id])) {
         return false;
     }
+
     $cm = get_coursemodule_from_instance('pptbook', $id);
     $context = context_module::instance($cm->id);
+
+    // Remove all stored slide files.
     $fs = get_file_storage();
     $fs->delete_area_files($context->id, 'mod_pptbook', 'slides');
 
+    // Remove related records.
     $DB->delete_records('pptbook_item', ['pptbookid' => $pptbook->id]);
     $DB->delete_records('pptbook', ['id' => $pptbook->id]);
+
     return true;
 }
 
+/**
+ * Saves uploaded slide files from the filemanager into the module file area.
+ *
+ * Safe to call from both add and update paths. If the coursemodule ID is not
+ * yet available during add, the function returns early and the update path
+ * will persist the files later.
+ *
+ * @param int $instanceid PPT Book instance ID.
+ * @param stdClass $data  Form data containing the filemanager draft itemid.
+ * @param int|null $cmid  Course module ID if available.
+ * @return void
+ * @package   mod_pptbook
+ */
 function pptbook_save_slides_files($instanceid, $data, $cmid = null) {
     global $CFG;
+
     require_once($CFG->libdir . '/filelib.php');
 
-    // Prefer explicit $cmid if given; otherwise use $data->coursemodule during add/update.
+    // Prefer explicit $cmid if given; otherwise use $data->coursemodule.
     if (empty($cmid)) {
         $cmid = $data->coursemodule ?? null;
     }
+
     if (empty($cmid)) {
+        // Try to resolve the coursemodule from the instance.
         try {
             $cm = get_coursemodule_from_instance('pptbook', $instanceid, 0, false, IGNORE_MISSING);
             if ($cm) {
                 $cmid = $cm->id;
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $cmid = null;
         }
     }
+
     if (empty($cmid)) {
-        // Defer saving files; file manager keeps draft files; update_instance will handle it.
+        // Defer saving files. The filemanager keeps drafts; update_instance will handle it.
         return;
     }
+
     $context = context_module::instance($cmid);
+
     file_save_draft_area_files(
         $data->slides_filemanager ?? 0,
         $context->id,
@@ -117,35 +180,58 @@ function pptbook_save_slides_files($instanceid, $data, $cmid = null) {
     );
 }
 
-
+/**
+ * Provides info for the course module listing.
+ *
+ * @param cm_info $cm Course module object.
+ * @return cached_cm_info|null CM info or null if instance not found.
+ * @package   mod_pptbook
+ */
 function pptbook_get_coursemodule_info($cm) {
     global $DB;
+
     if ($pptbook = $DB->get_record('pptbook', ['id' => $cm->instance], 'id, name')) {
         $result = new cached_cm_info();
-        $result->name = $pptbook->name; // kannst du auch weglassen – siehe CSS unten
-        // KEIN $result->content mehr
+        $result->name = $pptbook->name; // Provide the instance name.
+        // No $result->content here.
         return $result;
     }
+
     return null;
 }
 
 /**
- * File serving callback.
+ * File serving callback for the module.
+ *
+ * @param stdClass  $course         Course object.
+ * @param cm_info   $cm             Course module object.
+ * @param context   $context        Context.
+ * @param string    $filearea       File area name.
+ * @param array     $args           Extra arguments (path components).
+ * @param bool      $forcedownload  Whether the file should be downloaded.
+ * @param array     $options        Additional send_stored_file() options.
+ * @return bool|void False on failure, or terminates with file output.
+ * @package   mod_pptbook
  */
 function pptbook_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
     require_login($course, true, $cm);
+
     if ($context->contextlevel != CONTEXT_MODULE) {
         return false;
     }
+
     if ($filearea !== 'slides') {
         return false;
     }
+
     $fs = get_file_storage();
     $itemid = 0;
     $filepath = '/';
     $filename = array_pop($args);
+
     if (!$file = $fs->get_file($context->id, 'mod_pptbook', 'slides', $itemid, $filepath, $filename)) {
         return false;
     }
+
     send_stored_file($file, 0, 0, $forcedownload, $options);
 }

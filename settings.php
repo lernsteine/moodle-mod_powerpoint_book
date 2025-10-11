@@ -1,6 +1,5 @@
 <?php
-defined('MOODLE_INTERNAL') || die();
-// This file is part of Moodle - http://moodle.org/
+// This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -13,20 +12,30 @@ defined('MOODLE_INTERNAL') || die();
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * [Short description of the file]
+ * Admin settings for the PPT Book activity.
  *
- * @package    mod_pptbook
- * @copyright  2025 Ralf Hagemeister <ralf.hagemeister@lernsteine.de>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   mod_pptbook
+ * @category  admin
+ * @copyright 2025 Ralf Hagemeister
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-/**
- * Class mod_pptbook.
- */
+defined('MOODLE_INTERNAL') || die();
+
 if ($hassiteconfig) {
+    // Create the settings page (empty for now; add options here if needed).
     $settings = new admin_settingpage('modsettingpptbook', get_string('pluginname', 'mod_pptbook'));
+
+    // Example for future options:
+    // $settings->add(new admin_setting_configcheckbox(
+    //     'mod_pptbook/someflag',
+    //     get_string('someflag', 'mod_pptbook'),
+    //     get_string('someflag_desc', 'mod_pptbook'),
+    //     0
+    // ));
+
     $ADMIN->add('modsettings', $settings);
 }

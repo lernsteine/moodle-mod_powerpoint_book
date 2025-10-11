@@ -15,47 +15,88 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * [Short description of the file]
+ * Form definition for the PPT Book activity.
  *
  * @package    mod_pptbook
- * @copyright  2025 Ralf Hagemeister <ralf.hagemeister@lernsteine.de>
+ * @category   form
+ * @copyright  2025 Ralf Hagemeister
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-/**
- * Class mod_pptbook.
- */
 defined('MOODLE_INTERNAL') || die();
+
 require_once($CFG->dirroot . '/course/moodleform_mod.php');
 
+/**
+ * Module settings form for PPT Book.
+ *
+ * @package   mod_pptbook
+ */
 class mod_pptbook_mod_form extends moodleform_mod {
+
+    /**
+     * Defines the form fields for creating/updating a PPT Book instance.
+     *
+     * @return void
+     */
     public function definition() {
         $mform = $this->_form;
 
+        // Name.
         $mform->addElement('text', 'name', get_string('name', 'mod_pptbook'), ['size' => 64]);
         $mform->setType('name', PARAM_TEXT);
         $mform->addRule('name', null, 'required', null, 'client');
 
+        // Standard intro (intro + introformat).
         $this->standard_intro_elements();
 
-        $mform->addElement('filemanager', 'slides_filemanager', get_string('slides', 'mod_pptbook'), null, [
-            'subdirs' => 0,
-            'maxfiles' => -1,
-            'accepted_types' => ['.png'],
-        ]);
+        // Slides filemanager.
+        $mform->addElement(
+            'filemanager',
+            'slides_filemanager',
+            get_string('slides', 'mod_pptbook'),
+            null,
+            [
+                'subdirs' => 0,
+                'maxfiles' => -1,
+                'accepted_types' => ['.png'],
+            ]
+        );
         $mform->addHelpButton('slides_filemanager', 'slides', 'mod_pptbook');
 
+        // Captions JSON (hidden).
         $mform->addElement('hidden', 'captionsjson', '');
         $mform->setType('captionsjson', PARAM_RAW);
 
+        // Standard course module, grading, groups, restrictions, etc.
         $this->standard_coursemodule_elements();
+
+        // Action buttons.
         $this->add_action_buttons();
     }
 
+    /**
+     * Prepares draft areas and default values before the form is shown.
+     *
+     * @param stdClass $defaultvalues Default values to be populated in the form (by reference).
+     * @return void
+     */
     public function data_preprocessing(&$defaultvalues) {
-        if ($this->current->instance) {
+        if (!empty($this->current->instance)) {
             $draftitemid = file_get_submitted_draft_itemid('slides_filemanager');
-            file_prepare_draft_area($draftitemid, $this->context->id, 'mod_pptbook', 'slides', 0, ['subdirs' => 0, 'maxfiles' => -1]);
+
+            file_prepare_draft_area(
+                $draftitemid,
+                $this->context->id,
+                'mod_pptbook',
+                'slides',
+                0,
+                [
+                    'subdirs' => 0,
+                    'maxfiles' => -1,
+                ]
+            );
+
             $defaultvalues['slides_filemanager'] = $draftitemid;
         }
     }

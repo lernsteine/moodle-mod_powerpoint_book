@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
+defined('MOODLE_INTERNAL') || die();
 class backup_pptbook_activity_structure_step extends backup_activity_structure_step {
     protected function define_structure() {
         $pptbook = new backup_nested_element('pptbook', ['id'], [

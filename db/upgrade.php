@@ -14,9 +14,29 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
-function xmldb_pptbook_upgrade($oldversion) {
+/**
+ * Upgrade steps for the PPT Book activity.
+ *
+ * @package   mod_pptbook
+ * @category  upgrade
+ * @copyright 2025 Ralf Hagemeister
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+defined('MOODLE_INTERNAL') || die();
+
+/**
+ * Executes plugin database upgrades.
+ *
+ * @param int $oldversion the version we are upgrading from
+ * @return bool always true on success
+ */
+function xmldb_pptbook_upgrade(int $oldversion): bool {
+    // Example upgrade step. Add real steps here when the DB schema changes.
     if ($oldversion < 2025100802) {
+        // (No schema changes in this step.)
         upgrade_mod_savepoint(true, 2025100802, 'pptbook');
     }
+
     return true;
 }

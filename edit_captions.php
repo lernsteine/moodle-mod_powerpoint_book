@@ -32,12 +32,12 @@ require_once(__DIR__ . '/edit_captions_form.php');
 
 $cmid = optional_param('cmid', 0, PARAM_INT);
 $id   = optional_param('id', 0, PARAM_INT);
-// Fallback
+// Fallback.
 if (!$cmid && $id) {
     $cmid = $id;
 }
 if (!$cmid) {
-    print_error('invalidcoursemodule');
+    throw new \moodle_exception('erroridentifier', 'mod_pptbook'); // With matching string.
 }
 
 $cm = get_coursemodule_from_id('pptbook', $cmid, 0, false, MUST_EXIST);
