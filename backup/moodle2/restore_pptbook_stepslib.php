@@ -27,6 +27,7 @@
  * Defines restore paths and processes restored data for mod_pptbook.
  */
 class restore_pptbook_activity_structure_step extends restore_activity_structure_step {
+
     /**
      * Define the restore structure for this activity.
      *
@@ -79,7 +80,7 @@ class restore_pptbook_activity_structure_step extends restore_activity_structure
         $this->add_related_files('mod_pptbook', 'slides', null);
     }
 }
-< ? php
+<?php
 // This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -108,6 +109,7 @@ class restore_pptbook_activity_structure_step extends restore_activity_structure
  * Defines restore paths and processes restored data for mod_pptbook.
  */
 class restore_pptbook_activity_structure_step extends restore_activity_structure_step {
+
     /**
      * Define the restore structure for this activity.
      *
