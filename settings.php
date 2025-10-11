@@ -26,16 +26,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 if ($hassiteconfig) {
-    // Create the settings page (empty for now; add options here if needed).
+    // Create the settings page. Add options here if needed in the future.
     $settings = new admin_settingpage('modsettingpptbook', get_string('pluginname', 'mod_pptbook'));
-
-    // Example for future options:
-    // $settings->add(new admin_setting_configcheckbox(
-    //     'mod_pptbook/someflag',
-    //     get_string('someflag', 'mod_pptbook'),
-    //     get_string('someflag_desc', 'mod_pptbook'),
-    //     0
-    // ));
 
     $ADMIN->add('modsettings', $settings);
 }

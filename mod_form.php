@@ -33,7 +33,6 @@ require_once($CFG->dirroot . '/course/moodleform_mod.php');
  * @package   mod_pptbook
  */
 class mod_pptbook_mod_form extends moodleform_mod {
-
     /**
      * Defines the form fields for creating/updating a PPT Book instance.
      *

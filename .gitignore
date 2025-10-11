@@ -1,5 +1,5 @@
 ﻿vendor/
-vendor_1/
 node_modules/
-*.log
-
+composer.lock
+.DS_Store
+Thumbs.db

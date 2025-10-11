@@ -15,21 +15,27 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * [Short description of the file]
+ * Privacy provider for mod_pptbook.
+ *
+ * This plugin stores no personal data.
  *
  * @package    mod_pptbook
+ * @category   privacy
  * @copyright  2025 Ralf Hagemeister <ralf.hagemeister@lernsteine.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-/**
- * Class mod_pptbook.
- */
-
 namespace mod_pptbook\privacy;
-defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Null provider: mod_pptbook does not store any personal data.
+ */
 class provider implements \core_privacy\local\metadata\null_provider {
+    /**
+     * Returns the language string identifier with the privacy message.
+     *
+     * @return string
+     */
     public static function get_reason(): string {
         return 'privacy:metadata';
     }

@@ -41,7 +41,7 @@ $context = context_module::instance($cm->id);
 require_capability('mod/pptbook:view', $context);
 
 $PAGE->set_url('/mod/pptbook/view.php', ['id' => $id, 'page' => $page]);
-$PAGE->set_title(format_string($pptbook->name));      // Stays as Browser title ok
+$PAGE->set_title(format_string($pptbook->name));      // Stays as Browser title ok.
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 $PAGE->requires->css(new moodle_url('/mod/pptbook/styles.css'));

@@ -15,35 +15,47 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * [Short description of the file]
+ * Form to edit slide captions for the PPT Book activity.
  *
- * @package    mod_pptbook
- * @copyright  2025 Ralf Hagemeister <ralf.hagemeister@lernsteine.de>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-/**
- * Class mod_pptbook.
+ * @package   mod_pptbook
+ * @category  form
+ * @copyright 2025 Ralf Hagemeister
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
+
 require_once($CFG->libdir . '/formslib.php');
 
+/**
+ * Captions editing form for mod_pptbook.
+ *
+ * Expects in $this->_customdata:
+ *  - 'files' (array<string,string>): filename => existing caption.
+ *  - 'cmid' (int): course module id.
+ */
 class mod_pptbook_edit_captions_form extends moodleform {
+    /**
+     * Define the form elements.
+     *
+     * @return void
+     */
     public function definition() {
         $mform = $this->_form;
 
         $files = $this->_customdata['files'] ?? [];
         foreach ($files as $filename => $existing) {
-            $mform->addElement('textarea', 'caption[' . $filename . ']', s($filename), ['rows' => 2, 'cols' => 80]);
-            $mform->setType('caption[' . $filename . ']', PARAM_RAW);
-            $mform->setDefault('caption[' . $filename . ']', $existing);
+            $elementname = 'caption[' . $filename . ']';
+            $mform->addElement('textarea', $elementname, s($filename), ['rows' => 2, 'cols' => 80]);
+            $mform->setType($elementname, PARAM_RAW);
+            $mform->setDefault($elementname, $existing);
         }
 
-        // Hidden cmid + id (beide = CM-ID).
-        $cmid = $this->_customdata['cmid'] ?? 0;
+        // Hidden cmid + id (both equal to course module ID).
+        $cmid = (int)($this->_customdata['cmid'] ?? 0);
         $mform->addElement('hidden', 'cmid', $cmid);
         $mform->setType('cmid', PARAM_INT);
+
         $mform->addElement('hidden', 'id', $cmid);
         $mform->setType('id', PARAM_INT);
 

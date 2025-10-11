@@ -23,18 +23,16 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 require_once($CFG->dirroot . '/mod/pptbook/backup/moodle2/backup_pptbook_stepslib.php');
 
 /**
  * Defines the backup task for the PPT Book activity.
  *
  * Registers settings and backup steps for this module.
- *
- * @package   mod_pptbook
- * @category  backup
  */
-class backup_pptbook_activity_task extends backup_activity_task
-{
+class backup_pptbook_activity_task extends backup_activity_task {
     /**
      * Define (optional) backup settings for this activity.
      *
@@ -42,8 +40,7 @@ class backup_pptbook_activity_task extends backup_activity_task
      *
      * @return void
      */
-    protected function define_my_settings()
-    {
+    protected function define_my_settings(): void {
         // No custom settings.
     }
 
@@ -54,9 +51,10 @@ class backup_pptbook_activity_task extends backup_activity_task
      *
      * @return void
      */
-    protected function define_my_steps()
-    {
-        $this->add_step(new backup_pptbook_activity_structure_step('pptbook_structure', 'pptbook.xml'));
+    protected function define_my_steps(): void {
+        $this->add_step(
+            new backup_pptbook_activity_structure_step('pptbook_structure', 'pptbook.xml')
+        );
     }
 
     /**
@@ -65,8 +63,7 @@ class backup_pptbook_activity_task extends backup_activity_task
      * @param string $content The content that may contain links.
      * @return string Content with any links encoded (no-op for this plugin).
      */
-    public static function encode_content_links($content)
-    {
+    public static function encode_content_links(string $content): string {
         return $content;
     }
 }
