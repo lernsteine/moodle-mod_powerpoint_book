@@ -39,7 +39,6 @@ class restore_pptbook_activity_structure_step extends restore_activity_structure
         $paths[] = new restore_path_element('pptbook_item', '/activity/pptbook/items/item');
         return $this->prepare_activity_structure($paths);
     }
-
     /**
      * Process the main activity data.
      *
@@ -55,7 +54,6 @@ class restore_pptbook_activity_structure_step extends restore_activity_structure
         $newid = $DB->insert_record('pptbook', $data);
         $this->apply_activity_instance($newid);
     }
-
     /**
      * Process a single item record.
      *
@@ -70,7 +68,6 @@ class restore_pptbook_activity_structure_step extends restore_activity_structure
 
         $DB->insert_record('pptbook_item', $data);
     }
-
     /**
      * After execution hook to add related files.
      *
@@ -120,7 +117,6 @@ class restore_pptbook_activity_structure_step extends restore_activity_structure
         $paths[] = new restore_path_element('pptbook_item', '/activity/pptbook/items/item');
         return $this->prepare_activity_structure($paths);
     }
-
     /**
      * Process the main activity data.
      *
@@ -136,7 +132,6 @@ class restore_pptbook_activity_structure_step extends restore_activity_structure
         $newid = $DB->insert_record('pptbook', $data);
         $this->apply_activity_instance($newid);
     }
-
     /**
      * Process a single item record.
      *
@@ -151,7 +146,6 @@ class restore_pptbook_activity_structure_step extends restore_activity_structure
 
         $DB->insert_record('pptbook_item', $data);
     }
-
     /**
      * After execution hook to add related files.
      *

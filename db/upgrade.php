@@ -32,11 +32,9 @@ defined('MOODLE_INTERNAL') || die();
  * @return bool always true on success
  */
 function xmldb_pptbook_upgrade(int $oldversion): bool {
-    // Example upgrade step. Add real steps here when the DB schema changes.
+    // No upgrade steps yet.
     if ($oldversion < 2025100802) {
-        // (No schema changes in this step.)
         upgrade_mod_savepoint(true, 2025100802, 'pptbook');
     }
-
     return true;
 }

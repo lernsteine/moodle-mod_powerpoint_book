@@ -27,16 +27,12 @@
 
 namespace mod_pptbook\privacy;
 
+defined('MOODLE_INTERNAL') || die();
+
 /**
- * Null provider: mod_pptbook does not store any personal data.
+ * We do not store any personal data.
  */
 class provider implements \core_privacy\local\metadata\null_provider {
-
-    /**
-     * Returns the language string identifier with the privacy message.
-     *
-     * @return string
-     */
     public static function get_reason(): string {
         return 'privacy:metadata';
     }

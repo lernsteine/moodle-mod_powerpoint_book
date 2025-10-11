@@ -29,47 +29,19 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/mod/pptbook/backup/moodle2/restore_pptbook_stepslib.php');
 
-/**
- * Defines the restore task for the PPT Book activity.
- */
 class restore_pptbook_activity_task extends restore_activity_task {
-
-    /**
-     * Define any particular settings this activity needs during restore.
-     *
-     * This activity does not define extra settings.
-     *
-     * @return void
-     */
     protected function define_my_settings(): void {
-        // No settings.
+        // No custom settings.
     }
 
-    /**
-     * Define the restore steps for this activity.
-     *
-     * @return void
-     */
     protected function define_my_steps(): void {
-        $this->add_step(
-            new restore_pptbook_activity_structure_step('pptbook_structure', 'pptbook.xml')
-        );
+        $this->add_step(new restore_pptbook_activity_structure_step('pptbook_structure', 'pptbook.xml'));
     }
 
-    /**
-     * Define the contents in the activity that need to be decoded.
-     *
-     * @return array
-     */
     public static function define_decode_contents(): array {
         return [];
     }
 
-    /**
-     * Define the decoding rules for links belonging to this activity.
-     *
-     * @return array
-     */
     public static function define_decode_rules(): array {
         return [];
     }

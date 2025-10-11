@@ -28,62 +28,30 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Structure step to restore one PPT Book activity.
  */
-class restore_pptbook_activity_structure_step extends restore_activity_structure_step {
-
+class backup_pptbook_activity_structure_step extends backup_activity_structure_step {
     /**
-     * Define the structure of the restore paths.
+     * Define the backup structure.
      *
-     * @return array
+     * @return backup_nested_element
      */
-    protected function define_structure(): array {
-        $paths = [];
-        $paths[] = new restore_path_element('pptbook', '/activity/pptbook');
-        $paths[] = new restore_path_element('pptbook_item', '/activity/pptbook/items/item');
+    protected function define_structure(): backup_nested_element {
+        $pptbook = new backup_nested_element('pptbook', ['id'], [
+            'course', 'name', 'intro', 'introformat', 'captionsjson', 'timecreated', 'timemodified',
+        ]);
 
-        return $this->prepare_activity_structure($paths);
-    }
+        $items = new backup_nested_element('items');
+        $item  = new backup_nested_element('item', ['id'], [
+            'filename', 'title', 'caption', 'sortorder', 'timecreated', 'timemodified',
+        ]);
 
-    /**
-     * Process the main pptbook element.
-     *
-     * @param array $data
-     * @return void
-     */
-    protected function process_pptbook($data): void {
-        global $DB;
+        $pptbook->add_child($items);
+        $items->add_child($item);
 
-        $data = (object) $data;
-        $data->course = $this->get_courseid();
+        $pptbook->set_source_table('pptbook', ['id' => backup::VAR_ACTIVITYID]);
+        $item->set_source_table('pptbook_item', ['pptbookid' => backup::VAR_PARENTID]);
 
-        // Insert activity record.
-        $newid = $DB->insert_record('pptbook', $data);
+        $pptbook->annotate_files('mod_pptbook', 'slides', null);
 
-        // Apply instance id mapping.
-        $this->apply_activity_instance($newid);
-    }
-
-    /**
-     * Process a child item element.
-     *
-     * @param array $data
-     * @return void
-     */
-    protected function process_pptbook_item($data): void {
-        global $DB;
-
-        $data = (object) $data;
-        $data->pptbookid = $this->get_new_parentid('pptbook');
-
-        $DB->insert_record('pptbook_item', $data);
-    }
-
-    /**
-     * After the main restore, add related files.
-     *
-     * @return void
-     */
-    protected function after_execute(): void {
-        // Add files for the 'slides' file area.
-        $this->add_related_files('mod_pptbook', 'slides', null);
+        return $this->prepare_activity_structure($pptbook);
     }
 }

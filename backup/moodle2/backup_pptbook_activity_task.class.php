@@ -44,7 +44,6 @@ class backup_pptbook_activity_task extends backup_activity_task {
     protected function define_my_settings(): void {
         // No custom settings.
     }
-
     /**
      * Define the backup steps for this activity.
      *
@@ -57,7 +56,6 @@ class backup_pptbook_activity_task extends backup_activity_task {
             new backup_pptbook_activity_structure_step('pptbook_structure', 'pptbook.xml')
         );
     }
-
     /**
      * Encode links to the activity to make them transportable.
      *
