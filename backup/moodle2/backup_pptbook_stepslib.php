@@ -15,26 +15,16 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Restore steps for the PPT Book activity.
+ * Backup steps for mod_pptbook.
  *
  * @package   mod_pptbook
  * @category  backup
- * @copyright 2025 Ralf
+ * @copyright 2025 Ralf Hagemeister
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
-/**
- * Structure step to restore one PPT Book activity.
- */
 class backup_pptbook_activity_structure_step extends backup_activity_structure_step {
-    /**
-     * Define the backup structure.
-     *
-     * @return backup_nested_element
-     */
-    protected function define_structure(): backup_nested_element {
+    protected function define_structure() {
         $pptbook = new backup_nested_element('pptbook', ['id'], [
             'course', 'name', 'intro', 'introformat', 'captionsjson', 'timecreated', 'timemodified',
         ]);

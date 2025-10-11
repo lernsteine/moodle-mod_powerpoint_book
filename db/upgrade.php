@@ -15,26 +15,24 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Upgrade steps for the PPT Book activity.
+ * Upgrade script for mod_pptbook.
  *
  * @package   mod_pptbook
  * @category  upgrade
- * @copyright 2025 Ralf Hagemeister
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
- * Executes plugin database upgrades.
+ * Execute mod_pptbook upgrades between versions.
  *
- * @param int $oldversion the version we are upgrading from
- * @return bool always true on success
+ * @param int $oldversion
+ * @return bool
  */
 function xmldb_pptbook_upgrade(int $oldversion): bool {
-    // No upgrade steps yet.
     if ($oldversion < 2025100802) {
+        // Future upgrade steps go here.
         upgrade_mod_savepoint(true, 2025100802, 'pptbook');
     }
+
     return true;
 }

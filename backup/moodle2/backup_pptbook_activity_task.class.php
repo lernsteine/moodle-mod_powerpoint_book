@@ -15,54 +15,37 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Backup task for the PPT Book activity.
+ * Backup task for mod_pptbook.
  *
  * @package   mod_pptbook
  * @category  backup
- * @copyright 2025 Ralf Hagemeister
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 require_once($CFG->dirroot . '/mod/pptbook/backup/moodle2/backup_pptbook_stepslib.php');
 
-/**
- * Defines the backup task for the PPT Book activity.
- *
- * Registers settings and backup steps for this module.
- */
 class backup_pptbook_activity_task extends backup_activity_task {
-
     /**
-     * Define (optional) backup settings for this activity.
-     *
-     * This activity has no custom backup settings.
-     *
-     * @return void
+     * Define optional backup settings (none for this activity).
      */
-    protected function define_my_settings(): void {
+    protected function define_my_settings() {
         // No custom settings.
     }
+
     /**
-     * Define the backup steps for this activity.
-     *
-     * Adds the structure step that writes pptbook.xml.
-     *
-     * @return void
+     * Register backup steps.
      */
-    protected function define_my_steps(): void {
-        $this->add_step(
-            new backup_pptbook_activity_structure_step('pptbook_structure', 'pptbook.xml')
-        );
+    protected function define_my_steps() {
+        $this->add_step(new backup_pptbook_activity_structure_step('pptbook_structure', 'pptbook.xml'));
     }
+
     /**
-     * Encode links to the activity to make them transportable.
+     * Encode links in content (no-op).
      *
-     * @param string $content The content that may contain links.
-     * @return string Content with any links encoded (no-op for this plugin).
+     * @param string $content
+     * @return string
      */
-    public static function encode_content_links(string $content): string {
+    public static function encode_content_links($content) {
         return $content;
     }
 }

@@ -17,32 +17,46 @@
 /**
  * Restore task for mod_pptbook.
  *
- * Wires the restore steps and declares any content decode rules.
- *
- * @package    mod_pptbook
- * @category   backup
- * @copyright  2025 Ralf Hagemeister
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   mod_pptbook
+ * @category  backup
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/mod/pptbook/backup/moodle2/restore_pptbook_stepslib.php');
 
+/**
+ * Defines the restore task for the PPT Book activity.
+ */
 class restore_pptbook_activity_task extends restore_activity_task {
-    protected function define_my_settings(): void {
+    /**
+     * Define optional restore settings (none for this activity).
+     */
+    protected function define_my_settings() {
         // No custom settings.
     }
 
-    protected function define_my_steps(): void {
+    /**
+     * Register restore steps.
+     */
+    protected function define_my_steps() {
         $this->add_step(new restore_pptbook_activity_structure_step('pptbook_structure', 'pptbook.xml'));
     }
 
-    public static function define_decode_contents(): array {
+    /**
+     * Define content to decode (none).
+     *
+     * @return array
+     */
+    public static function define_decode_contents() {
         return [];
     }
 
-    public static function define_decode_rules(): array {
+    /**
+     * Define link decode rules (none).
+     *
+     * @return array
+     */
+    public static function define_decode_rules() {
         return [];
     }
 }

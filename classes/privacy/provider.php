@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+// This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,27 +12,27 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Privacy provider for mod_pptbook.
  *
- * This plugin stores no personal data.
- *
- * @package    mod_pptbook
- * @category   privacy
- * @copyright  2025 Ralf Hagemeister <ralf.hagemeister@lernsteine.de>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   mod_pptbook
+ * @copyright 2025 Ralf Hagemeister
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace mod_pptbook\privacy;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
- * We do not store any personal data.
+ * Null provider: this plugin stores no personal data.
  */
 class provider implements \core_privacy\local\metadata\null_provider {
+    /**
+     * Return the language string identifier with the privacy message.
+     *
+     * @return string
+     */
     public static function get_reason(): string {
         return 'privacy:metadata';
     }
