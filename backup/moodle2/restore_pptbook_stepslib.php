@@ -80,7 +80,6 @@ class restore_pptbook_activity_structure_step extends restore_activity_structure
         $this->add_related_files('mod_pptbook', 'slides', null);
     }
 }
-<?php
 // This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify

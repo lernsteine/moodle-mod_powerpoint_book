@@ -31,6 +31,7 @@ namespace mod_pptbook\privacy;
  * Null provider: mod_pptbook does not store any personal data.
  */
 class provider implements \core_privacy\local\metadata\null_provider {
+
     /**
      * Returns the language string identifier with the privacy message.
      *

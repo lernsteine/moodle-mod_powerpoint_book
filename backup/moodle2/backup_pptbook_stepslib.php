@@ -15,67 +15,75 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Backup steps for mod_pptbook.
+ * Restore steps for the PPT Book activity.
  *
- * Defines the activity structure for backup.
- *
- * @package    mod_pptbook
- * @category   backup
- * @copyright  2025 Ralf Hagemeister <ralf.hagemeister@lernsteine>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   mod_pptbook
+ * @category  backup
+ * @copyright 2025 Ralf
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+defined('MOODLE_INTERNAL') || die();
 
 /**
- * Defines the backup structure step for the PPT Book activity.
+ * Structure step to restore one PPT Book activity.
  */
-class backup_pptbook_activity_structure_step extends backup_activity_structure_step {
+class restore_pptbook_activity_structure_step extends restore_activity_structure_step {
+
     /**
-     * Defines the backup structure of the activity.
+     * Define the structure of the restore paths.
      *
-     * @return backup_nested_element The prepared activity structure.
+     * @return array
      */
-    protected function define_structure() {
+    protected function define_structure(): array {
+        $paths = [];
+        $paths[] = new restore_path_element('pptbook', '/activity/pptbook');
+        $paths[] = new restore_path_element('pptbook_item', '/activity/pptbook/items/item');
 
-        $pptbook = new backup_nested_element(
-            'pptbook',
-            ['id'],
-            [
-                'course',
-                'name',
-                'intro',
-                'introformat',
-                'captionsjson',
-                'timecreated',
-                'timemodified',
-            ]
-        );
+        return $this->prepare_activity_structure($paths);
+    }
 
-        $items = new backup_nested_element('items');
+    /**
+     * Process the main pptbook element.
+     *
+     * @param array $data
+     * @return void
+     */
+    protected function process_pptbook($data): void {
+        global $DB;
 
-        $item = new backup_nested_element(
-            'item',
-            ['id'],
-            [
-                'filename',
-                'title',
-                'caption',
-                'sortorder',
-                'timecreated',
-                'timemodified',
-            ]
-        );
+        $data = (object) $data;
+        $data->course = $this->get_courseid();
 
-        // Build the tree.
-        $pptbook->add_child($items);
-        $items->add_child($item);
+        // Insert activity record.
+        $newid = $DB->insert_record('pptbook', $data);
 
-        // Define sources.
-        $pptbook->set_source_table('pptbook', ['id' => backup::VAR_ACTIVITYID]);
-        $item->set_source_table('pptbook_item', ['pptbookid' => backup::VAR_PARENTID]);
+        // Apply instance id mapping.
+        $this->apply_activity_instance($newid);
+    }
 
-        // Define file annotations.
-        $pptbook->annotate_files('mod_pptbook', 'slides', null);
+    /**
+     * Process a child item element.
+     *
+     * @param array $data
+     * @return void
+     */
+    protected function process_pptbook_item($data): void {
+        global $DB;
 
-        return $this->prepare_activity_structure($pptbook);
+        $data = (object) $data;
+        $data->pptbookid = $this->get_new_parentid('pptbook');
+
+        $DB->insert_record('pptbook_item', $data);
+    }
+
+    /**
+     * After the main restore, add related files.
+     *
+     * @return void
+     */
+    protected function after_execute(): void {
+        // Add files for the 'slides' file area.
+        $this->add_related_files('mod_pptbook', 'slides', null);
     }
 }

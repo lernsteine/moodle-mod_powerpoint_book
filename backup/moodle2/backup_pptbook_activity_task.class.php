@@ -33,6 +33,7 @@ require_once($CFG->dirroot . '/mod/pptbook/backup/moodle2/backup_pptbook_stepsli
  * Registers settings and backup steps for this module.
  */
 class backup_pptbook_activity_task extends backup_activity_task {
+
     /**
      * Define (optional) backup settings for this activity.
      *

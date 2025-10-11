@@ -33,6 +33,7 @@ require_once($CFG->dirroot . '/mod/pptbook/backup/moodle2/restore_pptbook_stepsl
  * Defines the restore task for the PPT Book activity.
  */
 class restore_pptbook_activity_task extends restore_activity_task {
+
     /**
      * Define any particular settings this activity needs during restore.
      *
