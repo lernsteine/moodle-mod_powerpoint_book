@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
-defined('MOODLE_INTERNAL') || die();
 function xmldb_pptbook_upgrade($oldversion) {
     if ($oldversion < 2025100802) {
         upgrade_mod_savepoint(true, 2025100802, 'pptbook');

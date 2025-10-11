@@ -26,8 +26,6 @@
  * Class mod_pptbook.
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 function pptbook_get_slide_files(context_module $context): array {
     $fs = get_file_storage();
     $files = $fs->get_area_files($context->id, 'mod_pptbook', 'slides', 0, 'filename', false);
