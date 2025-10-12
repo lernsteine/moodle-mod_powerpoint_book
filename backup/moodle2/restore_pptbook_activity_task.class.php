@@ -19,6 +19,7 @@
  *
  * @package   mod_pptbook
  * @category  backup
+ * @copyright 2025 Ralf Hagemeister
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

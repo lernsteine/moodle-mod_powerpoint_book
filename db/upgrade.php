@@ -1,4 +1,5 @@
 <?php
+defined('MOODLE_INTERNAL') || die();
 // This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -19,6 +20,7 @@
  *
  * @package   mod_pptbook
  * @category  upgrade
+ * @copyright 2025 Ralf Hagemeister 
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
