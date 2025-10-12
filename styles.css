@@ -75,8 +75,7 @@
 }
 
 /* Edge & curl (dimmed) */
-.pptbook-page:
-:after {
+.pptbook-page::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -91,13 +90,11 @@
     border-radius: 12px;
 }
 
-.pptbook-page.curling:
-:after {
+.pptbook-page.curling::after {
     opacity: 0.45;
 }
 
-.pptbook-page:
-:before {
+.pptbook-page::before {
     content: "";
     position: absolute;
     top: 0;
@@ -119,22 +116,19 @@
         transform 0.8s cubic-bezier(0.15, 0.65, 0.25, 1);
 }
 
-.pptbook-page.edge-right:
-:before {
+.pptbook-page.edge-right::before {
     right: -2px;
     left: auto;
     --edge-x: 6px;
 }
 
-.pptbook-page.edge-left:
-:before {
+.pptbook-page.edge-left::before {
     left: -2px;
     right: auto;
     --edge-x: -6px;
 }
 
-.pptbook-page.edge-on:
-:before {
+.pptbook-page.edge-on::before {
     opacity: 0.8;
 }
 
