@@ -1,26 +1,36 @@
-<div class="pptbook-wrap">
 {{!
     @template mod_pptbook/page
 
-    Renders a paginated 2×2 grid of PNG slides with an optional modal preview.
+    PPT Book page: renders a paginated 2×2 grid of slides with optional lightbox modal.
 
     Example context (json):
     {
-        "title": "PPT Book",
-        "images": [
-            { "src": "https://via.placeholder.com/300x200?text=Slide+1", "alt": "Slide 1" },
-            { "src": "https://via.placeholder.com/300x200?text=Slide+2", "alt": "Slide 2" },
-            { "src": "https://via.placeholder.com/300x200?text=Slide+3", "alt": "Slide 3" },
-            { "src": "https://via.placeholder.com/300x200?text=Slide+4", "alt": "Slide 4" }
-        ],
-        "haspagination": true,
-        "prevurl": "https://example.com/prev",
-        "nexturl": "https://example.com/next",
-        "modalimgsrc": "https://via.placeholder.com/1200x800?text=Slide+1"
+      "manage": true,
+      "manageurl": "https://example.org/mod/pptbook/edit_captions.php?id=123",
+      "items": [
+        {
+          "fullurl": "https://example.org/pluginfile.php/1/mod_pptbook/slides/slide1.png",
+          "imgurl": "https://example.org/pluginfile.php/1/mod_pptbook/slides/slide1.png",
+          "filename": "slide1.png",
+          "caption": "Intro"
+        },
+        {
+          "fullurl": "https://example.org/pluginfile.php/1/mod_pptbook/slides/slide2.png",
+          "imgurl": "https://example.org/pluginfile.php/1/mod_pptbook/slides/slide2.png",
+          "filename": "slide2.png"
+        }
+      ],
+      "hasprev": true,
+      "preurl": "https://example.org/mod/pptbook/view.php?id=123&page=1",
+      "hasnext": true,
+      "nexturl": "https://example.org/mod/pptbook/view.php?id=123&page=3",
+      "page": 2,
+      "pages": 5,
+      "modalimgsrc": "https://example.org/pluginfile.php/1/mod_pptbook/slides/slide1.png"
     }
 }}
-
 <div class="pptbook-wrap">
+
 <!-- File: mod/pptbook/templates/page.mustache -->
 
   {{#manage}}
