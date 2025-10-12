@@ -69,7 +69,7 @@
 /* Edge & curl (dimmed) */
 .pptbook-page::after {
     content: ""; 
-    pos ition: absolute; 
+    position: absolute; 
     inset: 0; 
     pointer-events: none;
     background: radial-gradient(1000px 320px at var(--curl-x, 96%) 50%, rgba(0,0,0,.08), rgba(0,0,0,0) 60%);
