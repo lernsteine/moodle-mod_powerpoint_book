@@ -13,16 +13,13 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
-
 /**
  * Defines the backup structure step for the PPT Book activity.
- *
  * @package   mod_pptbook
  * @category  backup
  * @copyright 2025 Ralf Hagemeister
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 class backup_pptbook_activity_structure_step extends backup_activity_structure_step {
     /**
      * Build the activity structure for backup.
