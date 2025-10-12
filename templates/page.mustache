@@ -1,4 +1,26 @@
 <div class="pptbook-wrap">
+{{!
+    @template mod_pptbook/page
+
+    Renders a paginated 2×2 grid of PNG slides with an optional modal preview.
+
+    Example context (json):
+    {
+        "title": "PPT Book",
+        "images": [
+            { "src": "https://via.placeholder.com/300x200?text=Slide+1", "alt": "Slide 1" },
+            { "src": "https://via.placeholder.com/300x200?text=Slide+2", "alt": "Slide 2" },
+            { "src": "https://via.placeholder.com/300x200?text=Slide+3", "alt": "Slide 3" },
+            { "src": "https://via.placeholder.com/300x200?text=Slide+4", "alt": "Slide 4" }
+        ],
+        "haspagination": true,
+        "prevurl": "https://example.com/prev",
+        "nexturl": "https://example.com/next",
+        "modalimgsrc": "https://via.placeholder.com/1200x800?text=Slide+1"
+    }
+}}
+<!-- File: mod/pptbook/templates/page.mustache -->
+
   {{#manage}}
     <div style="display:flex;justify-content:flex-end;margin:0 0 10px 0;">
       <a class="btn btn-secondary" href="{{manageurl}}">{{#str}} editcaptions, mod_pptbook {{/str}}</a>
