@@ -14,9 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
-defined('MOODLE_INTERNAL') || die();
 /**
- * Backup steps for mod_pptbook.
+ * Defines the backup structure step for the PPT Book activity.
  *
  * @package   mod_pptbook
  * @category  backup
@@ -25,6 +24,11 @@ defined('MOODLE_INTERNAL') || die();
  */
 
 class backup_pptbook_activity_structure_step extends backup_activity_structure_step {
+    /**
+     * Build the activity structure for backup.
+     *
+     * @return backup_nested_element
+     */
     protected function define_structure() {
         $pptbook = new backup_nested_element('pptbook', ['id'], [
             'course', 'name', 'intro', 'introformat', 'captionsjson', 'timecreated', 'timemodified',
