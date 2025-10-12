@@ -1,7 +1,6 @@
 <?php
 defined('MOODLE_INTERNAL') || die();
 // This file is part of Moodle - https://moodle.org/
-//
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -14,7 +13,6 @@ defined('MOODLE_INTERNAL') || die();
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
-
 /**
  * Upgrade script for mod_pptbook.
  *
@@ -23,10 +21,8 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright 2025 Ralf Hagemeister 
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 /**
  * Execute mod_pptbook upgrades between versions.
- *
  * @param int $oldversion
  * @return bool
  */
