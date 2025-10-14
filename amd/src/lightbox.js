@@ -1,77 +1,58 @@
-/**
- * Lightbox for PPT Book.
- * @module mod_pptbook/lightbox
- */
-define([], function() {
-    "use strict";
+define(['jquery'], function($) {
+    'use strict';
 
-    /**
-     * CSS selectors used by the lightbox.
-     * @type {{thumbs: string, modal: string, image: string}}
-     */
-    const SELECTORS = {thumbs: ".pptbook-zoom", modal: "#pptbook-modal", image: "#pptbook-modal-img"};
-
-    /**
-     * Open the modal with a given image URL.
-     * @param {HTMLElement} modal The modal container element.
-     * @param {HTMLImageElement} img The image element inside the modal.
-     * @param {string} url The full image URL to display.
-     * @return {void}
-     */
-    const open = function(modal, img, url) {
-        if (!url) {
-            return;
-        }
-        img.setAttribute("src", url);
-        modal.setAttribute("aria-hidden", "false");
-        modal.classList.add("is-open");
+    const SEL = {
+        link: '.pptbook-zoom',
+        modal: '#pptbook-modal',
+        img:   '#pptbook-modal-img'
     };
 
-    /**
-     * Close the modal and reset image source.
-     * @param {HTMLElement} modal The modal container element.
-     * @param {HTMLImageElement} img The image element inside the modal.
-     * @return {void}
-     */
-    const close = function(modal, img) {
-        modal.classList.remove("is-open");
-        modal.setAttribute("aria-hidden", "true");
-        img.setAttribute("src", "about:blank");
-    };
-
-    /**
-     * Initialize lightbox bindings.
-     * Binds click handlers to thumbnails and ESC/overlay close.
-     * @return {void}
-     */
-    const init = function() {
-        const modal = document.querySelector(SELECTORS.modal);
-        const img = document.querySelector(SELECTORS.image);
-        if (!modal || !img) {
+    const open = (src, alt) => {
+        const $m = $(SEL.modal);
+        const $img = $(SEL.img);
+        if (!src) {
             return;
         }
+        $img.attr('src', src);
+        if (alt) {
+            $img.attr('alt', alt);
+        }
+        $m.css('display', 'flex').attr('aria-hidden', 'false');
+        $('body').addClass('pptbook-modal-open');
+    };
 
-        document.querySelectorAll(SELECTORS.thumbs).forEach(function(a) {
-            a.addEventListener("click", function(e) {
-                e.preventDefault();
-                const url = a.getAttribute("data-full") || a.getAttribute("href");
-                open(modal, img, url);
-            });
+    const close = () => {
+        const $m = $(SEL.modal);
+        const $img = $(SEL.img);
+        $m.css('display', 'none').attr('aria-hidden', 'true');
+        $img.removeAttr('src'); // empty-src avoiding.
+        $('body').removeClass('pptbook-modal-open');
+    };
+
+    const bind = () => {
+        // Thumbnails klick -> open.
+        $(document).on('click', SEL.link, function(e) {
+            e.preventDefault();
+            const $a = $(this);
+            const src = $a.data('full') || $a.attr('href');
+            const alt = $a.find('img').attr('alt') || '';
+            open(src, alt);
         });
 
-        modal.addEventListener("click", function(e) {
-            // Close if the user clicks outside the image (overlay) or the image itself.
-            if (e.target === modal || e.target === img) {
-                close(modal, img);
+        // clic to image -> close.
+        $(document).on('click', SEL.modal, function(e) {
+            if (e.target.id === 'pptbook-modal' || e.target.id === 'pptbook-modal-img') {
+                close();
             }
         });
 
-        document.addEventListener("keydown", function(e) {
-            if (e.key === "Escape") {
-                close(modal, img);
+        // ESC close.
+        $(document).on('keyup', function(e) {
+            if (e.key === 'Escape') {
+                close();
             }
         });
     };
 
-    return {init: init};
+    return { init: bind };
 });
