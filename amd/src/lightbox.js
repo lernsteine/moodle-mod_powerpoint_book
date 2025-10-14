@@ -25,7 +25,7 @@ define(['jquery'], function($) {
         const $m = $(SEL.modal);
         const $img = $(SEL.img);
         $m.css('display', 'none').attr('aria-hidden', 'true');
-        $img.removeAttr('src'); // empty-src avoiding.
+        $img.removeAttr('src'); // Empty-src avoiding.
         $('body').removeClass('pptbook-modal-open');
     };
 
@@ -39,7 +39,7 @@ define(['jquery'], function($) {
             open(src, alt);
         });
 
-        // clic to image -> close.
+        // Clic to image -> close.
         $(document).on('click', SEL.modal, function(e) {
             if (e.target.id === 'pptbook-modal' || e.target.id === 'pptbook-modal-img') {
                 close();
@@ -54,5 +54,5 @@ define(['jquery'], function($) {
         });
     };
 
-    return { init: bind };
+    return {init: bind};
 });
