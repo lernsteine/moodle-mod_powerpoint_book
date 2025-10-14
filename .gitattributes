@@ -1,0 +1,2 @@
+amd/build/*.js   text eol=lf
+amd/build/*.map  -text
