@@ -36,8 +36,8 @@ $id   = optional_param('id', 0, PARAM_INT);
 if (!$cmid && $id) {
     $cmid = $id;
 }
-if (!$cmid) {
-    throw new \moodle_exception('erroridentifier', 'mod_pptbook'); // With matching string.
+if (empty($cmid)) {
+    throw new moodle_exception('invalidcoursemodule');
 }
 
 $cm = get_coursemodule_from_id('pptbook', $cmid, 0, false, MUST_EXIST);

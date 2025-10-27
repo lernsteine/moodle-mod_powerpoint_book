@@ -24,6 +24,8 @@
 
 $string['captionssaved'] = 'Captions saved';
 $string['editcaptions'] = 'Edit captions';
+$string['eventcourse_module_viewed'] = 'PPT Book viewed';
+$string['eventinstances_list_viewed'] = 'PPT Book instance list viewed';
 $string['intro'] = 'Description';
 $string['modulename'] = 'PPT Book';
 $string['modulename_help'] = 'Shows PNG slides (exported from PowerPoint) in a 2x2 paginated grid with captions. Click a slide to view it enlarged. Includes a subtle page-turn animation.';

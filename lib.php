@@ -26,25 +26,25 @@
  * Declares which features the module supports.
  *
  * @param string $feature FEATURE_* constant.
- * @return mixed True/false or other value depending on the feature, or null if unknown.
+ * @return mixed True/false or other value depending on the feature.
  * @package   mod_pptbook
  */
 function pptbook_supports($feature) {
     switch ($feature) {
         case FEATURE_MOD_INTRO:
             return true;
-
-        // Show the activity description on the course page if enabled.
         case FEATURE_SHOW_DESCRIPTION:
             return false;
-
         case FEATURE_BACKUP_MOODLE2:
             return true;
-
+        // offers completion tracking
+        case FEATURE_COMPLETION_TRACKS_VIEWS:
+            return true;
         default:
             return null;
     }
 }
+
 
 /**
  * Creates a new PPT Book instance.

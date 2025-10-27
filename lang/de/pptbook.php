@@ -24,6 +24,8 @@
 
 $string['captionssaved'] = 'Erläuterungen gespeichert';
 $string['editcaptions'] = 'Erläuterungen bearbeiten';
+$string['eventcourse_module_viewed'] = 'PPT-Buch angesehen';
+$string['eventinstances_list_viewed'] = 'Liste der PPT-Buch-Aktivitäten angesehen';
 $string['intro'] = 'Beschreibung';
 $string['modulename'] = 'PPT-Buch';
 $string['modulename_help'] = 'Zeigt aus PowerPoint exportierte PNG-Folien in einem 2×2-Raster mit Seitenumbruch und Bildunterschriften. Klick vergrößert. Enthält eine dezente Blätteranimation.';
