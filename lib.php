@@ -37,7 +37,7 @@ function pptbook_supports($feature) {
             return false;
         case FEATURE_BACKUP_MOODLE2:
             return true;
-        // offers completion tracking
+        // Offers completion tracking.
         case FEATURE_COMPLETION_TRACKS_VIEWS:
             return true;
         default:

@@ -71,7 +71,6 @@ class mod_pptbook_mod_form extends moodleform_mod {
         $this->standard_coursemodule_elements();
 
         // Action buttons.
-		
         $this->add_action_buttons();
     }
 

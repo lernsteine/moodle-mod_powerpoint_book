@@ -22,11 +22,9 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 class course_module_instance_list_viewed extends \core\event\course_module_instance_list_viewed {
     protected function init(): void {
-        $this->data['crud']      = 'r'; // read
+        $this->data['crud']      = 'r'; // Read.
         $this->data['edulevel']  = self::LEVEL_OTHER;
         $this->data['objecttable'] = null;
     }
@@ -34,11 +32,22 @@ class course_module_instance_list_viewed extends \core\event\course_module_insta
     public static function get_name(): string {
         return get_string('eventinstances_list_viewed', 'mod_pptbook');
     }
-
+	
+/**
+ * Describes the Event for Logs.
+ * @return string Describtion about the user who viewed the module.
+ */
     public function get_description(): string {
-        return "The user with id '{$this->userid}' viewed the list of PPT Book activities in the course with id '{$this->courseid}'.";
+        return "The user with id '{$this->userid}' viewed the list of PPT Book activities in the course with id '{
+			$this->courseid
+			}'.";
     }
 
+/**
+ * delivers the target URL für this event.
+ *
+ * @return \moodle_url URL of the activity (view.php).
+ */
     public function get_url(): \moodle_url {
         return new \moodle_url('/mod/pptbook/index.php', ['id' => $this->courseid]);
     }

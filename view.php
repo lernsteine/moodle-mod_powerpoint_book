@@ -29,18 +29,18 @@ require('../../config.php');
 require_once($CFG->libdir . '/completionlib.php');
 require_once($CFG->dirroot . '/mod/pptbook/locallib.php');
 
-$id      = required_param('id', PARAM_INT);
-$page    = optional_param('page', 1, PARAM_INT);
+$id = required_param('id', PARAM_INT);
+$page = optional_param('page', 1, PARAM_INT);
 $perpage = 4;
 
-$cm      = get_coursemodule_from_id('pptbook', $id, 0, false, MUST_EXIST);
-$course  = $DB->get_record('course',   ['id' => $cm->course],   '*', MUST_EXIST);
+$cm = get_coursemodule_from_id('pptbook', $id, 0, false, MUST_EXIST);
+$course = $DB->get_record('course',   ['id' => $cm->course],   '*', MUST_EXIST);
 $pptbook = $DB->get_record('pptbook',  ['id' => $cm->instance], '*', MUST_EXIST);
 
 require_login($course, true, $cm);
 $context = context_module::instance($cm->id);
 
-// Seite vorbereiten (URL, Header-Infos, Assets).
+// Prepare page.
 $PAGE->set_url('/mod/pptbook/view.php', ['id' => $id, 'page' => $page]);
 $PAGE->set_title(format_string($pptbook->name));
 $PAGE->set_heading(format_string($course->fullname));
@@ -48,18 +48,18 @@ $PAGE->set_context($context);
 $PAGE->requires->css(new moodle_url('/mod/pptbook/styles.css'));
 $PAGE->requires->js_call_amd('mod_pptbook/lightbox', 'init');
 
-// Aktivitätskopf ausblenden.
+// Hide activityheader.
 if (isset($PAGE->activityheader) && method_exists($PAGE->activityheader, 'set_attrs')) {
     $PAGE->activityheader->set_attrs([
-        'title'         => '',
-        'subtitle'      => '',
-        'description'   => '',
-        'hasintro'      => false,
-        'hidecompletion'=> true,
+        'title' => '',
+        'subtitle' => '',
+        'description'=> '',
+        'hasintro' => false,
+        'hidecompletion' => true,
     ]);
 }
 
-// Dateien laden und paginieren (vor Completion prüfen!).
+// Load files and count.
 $slides = pptbook_get_slide_files($context);
 $total  = count($slides);
 
@@ -71,7 +71,7 @@ if ($total === 0) {
     exit;
 }
 
-// Sortierung nach natürlicher Dateibenennung.
+// Sort by filenames.
 usort($slides, function($a, $b) {
     return strnatcasecmp($a->get_filename(), $b->get_filename());
 });
@@ -81,28 +81,28 @@ $page    = max(1, min((int)$page, $pages));
 $start   = ($page - 1) * $perpage;
 $current = array_slice($slides, $start, $perpage);
 
-// Event „course_module_viewed“ (einmal!) mit Snapshots.
+// Event „course_module_viewed“ once with snapshot.
 $event = \mod_pptbook\event\course_module_viewed::create([
     'objectid' => $pptbook->id,
     'context'  => $context,
 ]);
 $event->add_record_snapshot('course_modules', $cm);
-$event->add_record_snapshot('course',         $course);
-$event->add_record_snapshot('pptbook',        $pptbook);
+$event->add_record_snapshot('course', $course);
+$event->add_record_snapshot('pptbook', $pptbook);
 $event->trigger();
 
-// Completion nur auf der letzten Seite setzen und nur wenn „Require view“ aktiv.
+// Completion only on last page.
 $completion = new completion_info($course);
-if ($page >= $pages
-    && $completion->is_enabled($cm) == COMPLETION_TRACKING_AUTOMATIC
-    && !empty($cm->completionview)) {
+if ($page >= $pages && $completion->is_enabled($cm) == COMPLETION_TRACKING_AUTOMATIC
+    && !empty($cm->completionview)
+	) {
     $completion->set_module_viewed($cm);
 }
 
-// Captions lesen.
+// Read Captions.
 $captions = pptbook_get_captions($pptbook);
 
-// Template-Items bauen.
+// Built Template-Items.
 $items = [];
 foreach ($current as $f) {
     $filename = $f->get_filename();
@@ -128,7 +128,7 @@ if (has_capability('mod/pptbook:manage', $context)) {
     $manageurl = new moodle_url('/mod/pptbook/edit_captions.php', [
         'cmid' => $cm->id,
         'id'   => $cm->id,
-        'page' => $page
+        'page' => $page,
     ]);
 }
 

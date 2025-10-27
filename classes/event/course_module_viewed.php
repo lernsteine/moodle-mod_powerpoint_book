@@ -23,8 +23,12 @@
  */
 namespace mod_pptbook\event;
 
-defined('MOODLE_INTERNAL') || die();
-
+/**
+ * Event class for viewing a PPT Book activity.
+ *
+ * @package   mod_pptbook
+ * @category  event
+ */
 class course_module_viewed extends \core\event\course_module_viewed {
     /**
      * Init event data.
@@ -46,7 +50,9 @@ class course_module_viewed extends \core\event\course_module_viewed {
      * Detailed description for logs.
      */
     public function get_description(): string {
-        return "The user with id '{$this->userid}' viewed the PPT Book activity with the course module id '{$this->contextinstanceid}'.";
+        return "The user with id '{$this->userid}' viewed the PPT Book activity with the course module id '{
+			$this->contextinstanceid
+			}'.";
     }
 
     /**
