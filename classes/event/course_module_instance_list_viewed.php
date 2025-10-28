@@ -22,8 +22,25 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace mod_pptbook\event;
+
+/**
+ * Event fired when the index page (list of all instances) is viewed.
+ *
+ * Mirrors core\event\course_module_instance_list_viewed but allows
+ * plugin-specific localisation and future extensions.
+ *
+ * @package   mod_pptbook
+ * @category  event
+ */
 class course_module_instance_list_viewed extends \core\event\course_module_instance_list_viewed {
-    protected function init(): void {
+    
+    /**
+    * Initialise event properties (CRUD, edulevel, context level).
+    *
+    * @return void
+    */
+	protected function init(): void {
         $this->data['crud']      = 'r'; // Read.
         $this->data['edulevel']  = self::LEVEL_OTHER;
         $this->data['objecttable'] = null;
