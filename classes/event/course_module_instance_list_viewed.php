@@ -32,22 +32,22 @@ class course_module_instance_list_viewed extends \core\event\course_module_insta
     public static function get_name(): string {
         return get_string('eventinstances_list_viewed', 'mod_pptbook');
     }
-	
-/**
- * Describes the Event for Logs.
- * @return string Describtion about the user who viewed the module.
- */
+
+    /**
+     * Describes the Event for Logs.
+     * @return string Describtion about the user who viewed the module.
+     */
     public function get_description(): string {
         return "The user with id '{$this->userid}' viewed the list of PPT Book activities in the course with id '{
 			$this->courseid
 			}'.";
     }
 
-/**
- * delivers the target URL für this event.
- *
- * @return \moodle_url URL of the activity (view.php).
- */
+    /**
+     * delivers the target URL für this event.
+     *
+     * @return \moodle_url URL of the activity (view.php).
+     */
     public function get_url(): \moodle_url {
         return new \moodle_url('/mod/pptbook/index.php', ['id' => $this->courseid]);
     }

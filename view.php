@@ -34,8 +34,8 @@ $page = optional_param('page', 1, PARAM_INT);
 $perpage = 4;
 
 $cm = get_coursemodule_from_id('pptbook', $id, 0, false, MUST_EXIST);
-$course = $DB->get_record('course',   ['id' => $cm->course],   '*', MUST_EXIST);
-$pptbook = $DB->get_record('pptbook',  ['id' => $cm->instance], '*', MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+$pptbook = $DB->get_record('pptbook', ['id' => $cm->instance], '*', MUST_EXIST);
 
 require_login($course, true, $cm);
 $context = context_module::instance($cm->id);
@@ -53,7 +53,7 @@ if (isset($PAGE->activityheader) && method_exists($PAGE->activityheader, 'set_at
     $PAGE->activityheader->set_attrs([
         'title' => '',
         'subtitle' => '',
-        'description'=> '',
+        'description' => '',
         'hasintro' => false,
         'hidecompletion' => true,
     ]);
@@ -72,7 +72,7 @@ if ($total === 0) {
 }
 
 // Sort by filenames.
-usort($slides, function($a, $b) {
+usort($slides, function ($a, $b) {
     return strnatcasecmp($a->get_filename(), $b->get_filename());
 });
 
@@ -93,9 +93,10 @@ $event->trigger();
 
 // Completion only on last page.
 $completion = new completion_info($course);
-if ($page >= $pages && $completion->is_enabled($cm) == COMPLETION_TRACKING_AUTOMATIC
+if (
+    $page >= $pages && $completion->is_enabled($cm) == COMPLETION_TRACKING_AUTOMATIC
     && !empty($cm->completionview)
-	) {
+) {
     $completion->set_module_viewed($cm);
 }
 
