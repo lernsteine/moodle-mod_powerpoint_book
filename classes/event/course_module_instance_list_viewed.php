@@ -34,18 +34,21 @@ namespace mod_pptbook\event;
  * @category  event
  */
 class course_module_instance_list_viewed extends \core\event\course_module_instance_list_viewed {
-    
     /**
-    * Initialise event properties (CRUD, edulevel, context level).
-    *
-    * @return void
-    */
-	protected function init(): void {
+     * Initialise event properties (CRUD, edulevel, context level).
+     *
+     * @return void
+     */
+    protected function init(): void {
         $this->data['crud']      = 'r'; // Read.
         $this->data['edulevel']  = self::LEVEL_OTHER;
         $this->data['objecttable'] = null;
     }
-
+    /**
+     * Localised event name shown in logs/UI.
+     *
+     * @return string
+     */
     public static function get_name(): string {
         return get_string('eventinstances_list_viewed', 'mod_pptbook');
     }
