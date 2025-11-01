@@ -47,14 +47,14 @@ echo $OUTPUT->heading(get_string('modulenameplural', 'mod_pptbook'));
 
 if (!$pptbooks = get_all_instances_in_course('pptbook', $course)) {
     notice(
-        get_string('nonewmodules', '', get_string('modulename', 'pptbook')),
+        get_string('noinstances', 'mod_pptbook'),
         new moodle_url('/course/view.php', ['id' => $courseid])
     );
     exit;
 }
 
 $table = new html_table();
-$table->head = [get_string('name'), get_string('intro')];
+$table->head = [get_string('name'), get_string('introcol', 'mod_pptbook')];
 foreach ($pptbooks as $m) {
     $link = html_writer::link(new moodle_url(
         '/mod/pptbook/view.php',

@@ -9,6 +9,7 @@ Display of PNG slides (e.g., exported from PowerPoint)
 2x2 grid per page with pagination
 Lightbox/Modal: Clicking on a slide opens a larger view
 Captions per slide (editable in a separate form)
+Completion tracking - last page must be visited!
 Clean, responsive layout; works with standard themes
 Backup/Restore integrated
 No personal data (Privacy Null Provider)
